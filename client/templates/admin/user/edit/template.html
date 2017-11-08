@@ -1,0 +1,68 @@
+<template name="adminUserEdit">
+  <h3 class="breadcrumbs"><a href="/admin/users">Usuarios</a> / <a href="/admin/user/{{user._id}}">{{member.fullName}}</a> / <a href="/admin/user/{{idUser}}/edit">Editar</a></h3>
+  <h4>Editar usuario</h4>
+  <hr/>
+  <form>
+    {{#if errorExists 'form'}}
+      <div class="form-group text-center {{errorClass 'form'}}">
+        <span class="help-block">{{errorMessage 'form'}}</span>
+      </div>
+    {{/if}}
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group {{errorClass 'fullName'}}">
+          <label for="fullName">Nombre</label>
+          <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Nombre" value="{{member.fullName}}"/>
+          <span class="help-block">{{errorMessage 'fullName'}}</span>
+        </div>
+        <div class="form-group {{errorClass 'username'}}">
+          <label for="username">Nombre de Usuario</label>
+          <input type="username" class="form-control" id="username" name="username" placeholder="Nombre de usuario" value="{{user.username}}"/>
+          <span class="help-block">{{errorMessage 'username'}}</span>
+        </div>
+        <div class="form-group {{errorClass 'email'}}">
+          <label for="email">Correo electrónico</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="Correo Electrónico" value="{{member.email}}"/>
+          <span class="help-block">{{errorMessage 'email'}}</span>
+        </div>
+        <div class="form-group {{errorClass 'url'}}">
+          <label for="url">Url</label>
+          <input type="url" class="form-control" id="url" name="url" placeholder="http://www.mitienda.com" value="{{member.url}}"/>
+          <span class="help-block">{{errorMessage 'url'}}</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group {{errorClass 'plan'}}">
+          <label for="plan">Plan de pago</label>
+          <input type="text" class="form-control" id="plan" name="plan" value="{{member.plan}}"/>
+          <span class="help-block">{{errorMessage 'plan'}}</span>
+        </div>
+        <div class="form-group {{errorClass 'type'}}">
+          <label for="plan">Tipo de Usuario</label>
+          <input type="text" class="form-control" id="type" name="type" value="{{member.type}}"/>
+          <span class="help-block">{{errorMessage 'type'}}</span>
+        </div>
+        <div class="form-group {{errorClass 'createdAt'}}">
+          <label for="createdAt">Fecha de creación</label>
+          <input type="datetime-local" class="form-control" id="createdAt" name="createdAt" value="{{created}}"/>
+          <span class="help-block">{{errorMessage 'createdAt'}}</span>
+        </div>
+        <div class="form-group {{errorClass 'loginAt'}}">
+          <label for="loginAt">Fecha de último acceso</label>
+          <input type="datetime-local" class="form-control" id="loginAt" name="loginAt" value="{{login}}"/>
+          <span class="help-block">{{errorMessage 'loginAt'}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 text-left">
+        <a href="/admin/user/{{member.idUser}}/" class="btn btn-default">Volver</a>
+      </div>
+      <div class="col-md-6 text-right">
+        <input type="submit" class="btn btn-primary" value="Guardar Cambios"/>
+      </div>
+    </div>
+  </form>
+
+</template>

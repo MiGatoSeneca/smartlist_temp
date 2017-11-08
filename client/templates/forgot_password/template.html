@@ -1,0 +1,30 @@
+<template name="forgotPassword">
+  {{> blockLogo}}
+  <div class="well">
+    <h3 class="m-t-0 text-center">¿Has olvidado tu contraseña?</h3>
+    <p class=" text-center">Introduce tu correo electrónico para recuperar tu contraseña</p>
+    <form>
+      {{#if errorExists 'form'}}
+        <div class="form-group text-center {{errorClass 'form'}}">
+          <span class="help-block">{{errorMessage 'form'}}</span>
+        </div>
+      {{/if}}
+      <div class="form-group {{errorClass 'email'}}">
+        <label for="email">Correo electrónico</label>
+        <input type="email" class="form-control" id="email" name="email"/>
+        <span class="help-block">{{errorMessage 'email'}}</span>
+      </div>
+      <div class="text-center">
+        <input type="submit" class="btn btn-primary btn-block" value="Recuperar contraseña"/>
+      </div>
+    </form>
+  </div>
+  <hr/>
+  <div class="text-center">
+    <p>¿Ya tienes cuenta?</p>
+    <div>
+      <a href="/login" class="btn btn-default btn-block">Accede a tu cuenta</a>
+    </div>
+  </div>
+
+</template>

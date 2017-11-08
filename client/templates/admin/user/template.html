@@ -1,0 +1,25 @@
+<template name="adminUser">
+  <h3 class="breadcrumbs"><a href="/admin/users">Usuarios</a></h3>
+  <h4>Tabla de Usuarios</h4>
+  <hr/>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Url</th>
+        <th>Tipo</th>
+        <th>Plan</th>
+        <th>Acceso</th>
+        <th>Creación</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each users}}
+        {{> adminUsersTableItem}}
+      {{/each}}
+    </tbody>
+  </table>
+
+</template>

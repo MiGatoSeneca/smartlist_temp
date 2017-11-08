@@ -1,0 +1,28 @@
+<template name="adminLogin">
+  {{> blockLogo}}
+  <div class="well">
+    <h3 class="m-t-0 text-center">Acceso administración</h3>
+    <p class=" text-center">Introduce tu correo electrónico y contraseña</p>
+    <form>
+      {{#if errorExists 'form'}}
+        <div class="form-group text-center {{errorClass 'form'}}">
+          <span class="help-block">{{errorMessage 'form'}}</span>
+        </div>
+      {{/if}}
+      <div class="form-group {{errorClass 'email'}}">
+        <label for="email">Correo electrónico</label>
+        <input type="email" class="form-control" id="email" name="email"/>
+        <span class="help-block">{{errorMessage 'email'}}</span>
+      </div>
+      <div class="form-group {{errorClass 'password'}}">
+        <label for="password">Contraseña</label>
+        <input type="password" class="form-control" id="password" name="password"/>
+        <span class="help-block">{{errorMessage 'password'}}</span>
+      </div>
+      <div class="text-center">
+        <input type="submit" class="btn btn-primary btn-block" value="Siguiente"/>
+      </div>
+    </form>
+  </div>
+
+</template>

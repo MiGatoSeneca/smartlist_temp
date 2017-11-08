@@ -1,0 +1,49 @@
+<template name="adminUsers">
+  <h3 class="breadcrumbs"><a href="/admin/users">Usuarios</a></h3>
+  <h4>Tabla de Usuarios</h4>
+  <hr/>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Username</th>
+        <th>Correo</th>
+        <th>Url</th>
+        <th>Tipo</th>
+        <th>Plan</th>
+        <th>Acceso</th>
+        <th>Creación</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each users}}
+        {{> adminUsersTableItem}}
+      {{/each}}
+    </tbody>
+  </table>
+
+</template>
+
+<template name="adminUsersTableItem">
+  {{#if isNotAdmin member.type}}
+    <tr>
+      <td class="w-100-p">{{member.fullName}}</td>
+      <td>{{username}}</td>
+      <td>{{member.email}}</td>
+      <td>{{member.url}}</td>
+      <td>{{member.type}}</td>
+      <td>{{member.plan}}</td>
+      <td><span class="text-nowrap">{{member.login}}</span></td>
+      <td><span class="text-nowrap">{{created}}</span></td>
+      <td>
+        <span class="text-nowrap">
+          <a href="/admin/user/{{_id}}/edit">Editar</a>
+          &nbsp;|&nbsp;
+          <a class="red delete" href="#">Eliminar</a>
+        </span>
+      </td>
+    </tr>
+  {{/if}}
+
+</template>

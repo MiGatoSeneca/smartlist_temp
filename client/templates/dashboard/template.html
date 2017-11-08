@@ -1,0 +1,75 @@
+<template name="dashboard">
+  <h3 class="breadcrumbs"><a href="/dashboard">Dashboard</a></h3>
+  {{#unless hasMemberUsers}}
+    <div class="text-center m-t-50">
+      <h1 class="glyphicon glyphicon-remove"></h1>
+      <h4>Atención es necesario instalar el módulo para ver el dashboard</h4>
+      <p>En el dashboard aparecerán las métricas principales de tu IA</p>
+      <a href="/install" class="btn btn-primary">Ir a la instalación</a>
+    </div>
+  {{else}}
+
+    <div class="text-right">
+      Rango de Fecha:
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <a href="#" class="btn btn-default change_period" data-value="today">Hoy</a>
+        <a href="#" class="btn btn-default change_period" data-value="yesterday">Ayer</a>
+        <a href="#" class="btn btn-default change_period" data-value="last_7_days">Últimos 7 Días</a>
+        <a href="#" class="btn btn-default change_period" data-value="last_30_days">Últimos 30 Días</a>
+      </div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div class="col-md-3 text-center">
+        <h1 class="m-0">{{countMemberUsers}}</h1>
+        <p class="m-0 text-muted">Usuarios</p>
+      </div>
+      <div class="col-md-3 text-center">
+        <h1 class="m-0">{{countMemberEvents "list"}}</h1>
+        <p class="m-0 text-muted">Personalizaciones</p>
+      </div>
+      <div class="col-md-3 text-center">
+        <h1 class="m-0">{{countMemberEvents "view"}}</h1>
+        <p class="m-0 text-muted">Items Vistos</p>
+      </div>
+      <div class="col-md-3 text-center">
+        <h1 class="m-0">{{countMemberEvents "add"}}</h1>
+        <p class="m-0 text-muted">Items Añadidos</p>
+      </div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="m-0">Personalización vs. No Personalización</h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <span class="text-muted">Mostrar Gráfica:</span>
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <a href="#" class="btn btn-sm btn-default">Resumen</a>
+              <a href="#" class="btn btn-sm btn-default">Vistos</a>
+              <a href="#" class="btn btn-sm btn-default">Añadidos</a>
+              <a href="#" class="btn btn-sm btn-default">Comprados</a>
+            </div>
+          </div>
+        </div>
+        <div id="chart">{{createChart}}</div>
+      </div>
+      <div class="col-md-4">
+        <h4 class="m-t-5">Pesos Inteligencia Artificial</h4>
+
+        <div id="polar">{{createPolar}}</div>
+      </div>
+    </div>
+
+
+    <div class="text-center m-t-50">
+      <h1 class="glyphicon glyphicon-info-sign"></h1>
+      <h4>Se están recolectando datos para crear las gráficas</h4>
+      <p>Los datos del informe estarán disponibles en 24 horas.</p>
+    </div>
+
+  {{/unless}}
+
+</template>

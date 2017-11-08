@@ -1,0 +1,39 @@
+<template name="login">
+  {{> blockLogo}}
+  <div class="well">
+    <h3 class="m-t-0 text-center">Accede a tu cuenta</h3>
+    <p class=" text-center">Introduce tu nombre de usuario y contraseña</p>
+    <form>
+      {{#if errorExists 'form'}}
+        <div class="form-group text-center {{errorClass 'form'}}">
+          <span class="help-block">{{errorMessage 'form'}}</span>
+        </div>
+      {{/if}}
+      <div class="form-group {{errorClass 'email'}}">
+        <label for="email">Correo electrónico</label>
+        <input type="email" class="form-control" id="email" name="email"/>
+        <span class="help-block">{{errorMessage 'email'}}</span>
+      </div>
+      <div class="form-group {{errorClass 'password'}}">
+        <label for="password">Contraseña</label>
+        <input type="password" class="form-control" id="password" name="password"/>
+        <span class="help-block">{{errorMessage 'password'}}</span>
+      </div>
+      <div class="text-right m-b-15">
+        <a href="/forgot-password">¿Has olvidado tu contraseña?</a>
+      </div>
+
+      <div class="text-center">
+        <input type="submit" class="btn btn-primary btn-block" value="Siguiente"/>
+      </div>
+    </form>
+  </div>
+  <hr/>
+  <div class="text-center">
+    <p>¿No tienes cuenta?</p>
+    <div>
+      <a href="/signup" class="btn btn-default btn-block">Date de Alta</a>
+    </div>
+  </div>
+
+</template>

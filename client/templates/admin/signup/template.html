@@ -1,0 +1,40 @@
+<template name="adminSignup">
+  {{> blockLogo}}
+  <div class="well">
+    <h3 class="m-t-0 text-center">Crea cuenta administrador</h3>
+    <p class=" text-center">Crea tu cuenta y empieza a administrar Smart List</p>
+    <form>
+      {{#if errorExists 'form'}}
+        <div class="form-group text-center {{errorClass 'form'}}">
+          <span class="help-block">{{errorMessage 'form'}}</span>
+        </div>
+      {{/if}}
+      <div class="form-group {{errorClass 'fullName'}}">
+        <label for="fullName">Nombre</label>
+        <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Nombre"/>
+        <span class="help-block">{{errorMessage 'fullName'}}</span>
+      </div>
+      <div class="form-group {{errorClass 'email'}}">
+        <label for="email">Correo electrónico</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Correo Electrónico"/>
+        <span class="help-block">{{errorMessage 'email'}}</span>
+      </div>
+      <div class="form-group {{errorClass 'password'}}">
+        <label for="password">Contraseña</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña"/>
+        <span class="help-block">{{errorMessage 'password'}}</span>
+      </div>
+      <div class="text-center">
+        <input type="submit" class="btn btn-primary btn-block" value="Date de Alta"/>
+      </div>
+    </form>
+  </div>
+  <hr/>
+  <div class="text-center">
+    <p>¿Ya tienes cuenta?</p>
+    <div>
+      <a href="/admin/login" class="btn btn-default btn-block">Accede a tu cuenta</a>
+    </div>
+  </div>
+
+</template>

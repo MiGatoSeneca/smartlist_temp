@@ -1,0 +1,59 @@
+<template name="signup">
+  {{> blockLogo}}
+  <div class="well">
+    <h3 class="m-t-0 text-center">Crea tu cuenta</h3>
+    <p class=" text-center">Crea tu cuenta y empieza a usar Smart List</p>
+    <form>
+      {{#if errorExists 'form'}}
+        <div class="form-group text-center {{errorClass 'form'}}">
+          <span class="help-block">{{errorMessage 'form'}}</span>
+        </div>
+      {{/if}}
+      <div class="form-group {{errorClass 'fullName'}}">
+        <label for="fullName">Nombre</label>
+        <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Nombre"/>
+        <span class="help-block">{{errorMessage 'fullName'}}</span>
+      </div>
+      <div class="form-group {{errorClass 'email'}}">
+        <label for="email">Correo electrónico</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Correo Electrónico"/>
+        <span class="help-block">{{errorMessage 'email'}}</span>
+      </div>
+      <div class="form-group {{errorClass 'password'}}">
+        <label for="password">Contraseña</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña"/>
+        <span class="help-block">{{errorMessage 'password'}}</span>
+      </div>
+      <div class="form-group {{errorClass 'url'}}">
+        <label for="url">Url de tu web</label>
+        <input type="url" class="form-control" id="url" name="url" placeholder="http://www.mitienda.com"/>
+        <span class="help-block">{{errorMessage 'url'}}</span>
+      </div>
+      <div class="form-group {{errorClass 'plan'}}">
+        <label for="plan">Selecciona tu plan</label>
+        <select class="form-control" id="plan" name="plan">
+          <option value="starter">Starter 19€ Hasta 50.000 Usuarios</option>
+          <option value="regular">Regular 29€ Hasta 100.000 Usuarios</option>
+          <option value="plus">Plus 59€ Hasta 250.000 Usuarios</option>
+          <option value="enterprise">Enterprise 149€ Hasta 500.000 Usuarios</option>
+        </select>
+        <span class="help-block">{{errorMessage 'plan'}}</span>
+      </div>
+      <div class="checkbox {{errorClass 'terms'}}">
+        <label><input type="checkbox" value="" name="terms" id="terms">Acepto los <a href="/terms" target="_blank">términos y condiciones de uso</a></label>
+      </div>
+
+      <div class="text-center">
+        <input type="submit" class="btn btn-primary btn-block" value="Prueba 30 días Gratis"/>
+      </div>
+    </form>
+  </div>
+  <hr/>
+  <div class="text-center">
+    <p>¿Ya tienes cuenta?</p>
+    <div>
+      <a href="/login" class="btn btn-default btn-block">Accede a tu cuenta</a>
+    </div>
+  </div>
+
+</template>

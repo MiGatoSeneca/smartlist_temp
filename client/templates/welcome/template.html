@@ -1,0 +1,8 @@
+<template name="welcome">
+  {{> blockLogo}}
+  {{#if isLoged}}
+    <script>window.location.href="/dashboard"</script>
+  {{else}}
+    <script>window.location.href="/login"</script>
+  {{/if}}
+</template>

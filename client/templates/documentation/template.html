@@ -1,0 +1,283 @@
+<template name="documentation">
+  <div class="row">
+    <div class="col-md-2">
+      <!--<h5>DOCUMENTACIÓN</h5>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="#home">Introducción</a></li>
+        <li><a href="#">Menu 1</a></li>
+        <li><a href="#">Menu 2</a></li>
+        <li><a href="#">Menu 3</a></li>
+      </ul>-->
+    </div>
+    <div class="col-md-10">
+      <h1>Documentación Smartlist</h1>
+      <hr/>
+      <p class="text-danger"><b>Atención</b> esta documentación está pensada para la integración de Smartlist en proyectos propios o en CMS que necesiten una instalación especial.</p>
+      <p>En el caso de tener un CMS como <b>Prestashop</b>, <b>Magento</b>, <b>Shopify</b> o <b>Woocommerce</b>, puede encontrar la guía de instalación y uso dentro del dashboard.</p>
+      <h3>Introducción</h3>
+      <hr/>
+      <p>Smartlist es una AI-as-a-Service.</p>
+      <p>Con Smartlist, podrás dejar la gestión de los listados de productos a nuestra AI, que buscará el orden de productos basado en el patrón de comportamiento del usuario que maximize la visibilidad de los todos los productos</p>
+      <p>La utilización de Smartlist es sencilla, se basa en registrar las acciones de los usuarios a través de una función de eventos que serán enviados a nuestros servidores, utilizar una función de ordenación y sincronizar la AI entrenada y la AI local para recibir una actualuzación constante de AI entrenada.</p>
+      <p>En esta documentación encontrarás la guía de instalación junto con la descripción de los archivos de configuración y el funcionamiento básico de SmartList.</p>
+      <h3>Instalación</h3>
+      <p>Dentro de tu dashboard en el área de instalación, podrás ver todos los módulos creados para cada CMS y una sección llamada "Integración Propia", pulsando el botón podrás descargar la versión de Smartlist diseñada para proyectos propios</p>
+      <p>El achivo .zip contiene el plugin donde podrás encontrar los siguientes archivos</p>
+      <p><b>Árbol de ficheros</b></p>
+      <ul>
+        <li>
+          <i class="fa fa-folder-open"></i> config
+          <ul>
+            <li>app.json</li>
+            <li>config.json</li>
+          </ul>
+        </li>
+        <li>
+          tools
+          <ul>
+            <li>cron.php</li>
+          </ul>
+        </li>
+        <li>
+          var
+          <ul>
+            <li>ab.json</li>
+            <li>ai.json</li>
+          </ul>
+        </li>
+        <li>smartlist.php</li>
+      </ul>
+      <p>Smartlist es un módulo para desarrollos web realizados en PHP, es necesario para su funcionamiento, cumplir los requisitos de versión, almacenamiento de cookies y permisos de escritura dentro del módulo para almacenar todos los datos de la AI.</p>
+      <p><b>Requisitos</b></p>
+      <ul>
+        <li><b>PHP</b> 5.6.10 o +</li>
+        <li><b>COOKIES</b> activadas</li>
+        <li><b>Permisos de escritura</b> en la carpeta donde se aloja el plugin</li>
+      </ul>
+      <p>En caso de tener problemas de instalación compruebe que estas tres características claves están disponibles.</p>
+      <p><b>SmartList y la base de datos</b></p>
+      <p>Smartlist <b>no</b> alamacena nada en su base de datos, por tanto no es necesario configurar ningún acceso, todos los datos utilizados son almacenados dentro de la var dentro del módulo.</p>
+      <h3>Inicialización de Clase</h3>
+      <hr/>
+      <p>Una vez instalado en módulo en la carpeta correspondiente para inicialo simplemente tendrá que generar una instancia de la clase Smartlist</p>
+      <pre>require_once(<i>PATH_TO_SMARTLIST</i>+"/smartlist.php");
+$smartlist = new SmartList();</pre>
+      <p><b>¿Registro de usuarios?</b></p>
+      <p>Una vez creada la instancia el módulo automáticamente detectará si el usuario que está ejecutando el módulo es nuevo o no.</p>
+      <h3>Eventos</h3>
+      <hr/>
+      <p>La ordenación de los productos depende de la actividad que realiza el usuario dentro de nuestra web, para ello es necesario regitrar</p>
+      <pre>
+$smartlist->createEvent("view",$item);</pre>
+      <p>El primer campo permite especificar la acción y el segundo introducir el item, a continucación puedes ver una descipición de este elemento</p>
+      <p><b>Formato del objeto item:</b></p>
+      <pre>
+<b>item</b> : {
+  <b>IID</b> : <i>identificador único de item</i>,
+  <b>properties</b> : <i>array con todas las propiedades del item: (color, talla, modelo, tela...)</i>,
+}</pre>
+      <p><b>Ejemplo:</b></p>
+      <p>En este ejemplo podrás ver la versatilidad del objeto item permitiendo</p>
+      <pre>
+<b>item</b> : {
+      <b>IID</b> : "XXGGDDTT-MMJJ",
+      <b>properties</b> : {
+        <b>brand</b> : "Nike",
+        <b>type</b> : "Running",
+        <b>on_sale</b> : false,
+        <b>price</b> : 150,
+        <b>availableColors</b> : ["blue","green","red"],
+        <b>size</b> : 10
+      }
+}</pre>
+      <h3>Ordenar</h3>
+      <p>La función ordenar, cambia el orden de los productos datos utilizando la AI entrenada almacenada en el sistema, potenciando los productos que es más probable que el usuario vea</p>
+
+      <pre>
+$smartlist->sort($itemsList);</pre>
+      <p>La función ordenar, cambia el orden de los productos datos utilizando la AI entrenada almacenada en el sistema, potenciando los productos que es más probable que el usuario vea</p>
+
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <h3>Estructura de la Clase</h3>
+      <pre>
+
+
+class SmartList {
+
+  /**
+   * __construct
+   * Constructor
+   * @param       {string} $cms Especificar el CMS utilizado
+   * @constructor
+   * @return      {bool}
+   */
+
+  public function __construct($cms){
+
+  }
+
+
+  /**
+   * createEvent
+   * Envía información al servidor de predicción para entrenamiento.
+   *
+   * @param  string  $action   Acción realizada
+   * @param  array   $item     Datos del producto
+   * @return boolean           Resultado del envío del la información
+   */
+
+  public function createEvent($action,$item){}
+
+  public function sort($itemsList){}
+
+  /**
+   * getUrl
+   * Duelve la url utilizada para conectarse con el servidor de predicción
+   *
+   * @return string url del servidor de predicción
+   */
+
+  public function getDebug(){}
+
+  /**
+   * setUrl
+   * Actualiza la url utilizada para conectarse con el servidor de predicción
+   *
+   * @return string url del servidor de predicción
+   */
+  public function setDebug($value){}
+
+
+
+  /**
+   * getUrl
+   * Duelve la url utilizada para conectarse con el servidor de predicción
+   *
+   * @return string url del servidor de predicción
+   */
+  public function getUrl(){}
+
+  /**
+   * setUrl
+   * Actualiza la url utilizada para conectarse con el servidor de predicción
+   *
+   * @return string url del servidor de predicción
+   */
+  public function setUrl($value){}
+
+  /**
+   * getUrl
+   * Duelve la url utilizada para conectarse con el servidor de predicción
+   *
+   * @return string url del servidor de predicción
+   */
+  public function getVersion(){}
+
+  /**
+   * getApiKey
+   * Devuelve el apiKey utilizado actualmente
+   *
+   * @return string llave de acceso al API del servidor
+   */
+  public function getApiKey(){}
+
+  /**
+   * setApiKey
+   * Actualiza el apiKey utilizado
+   * config/config.json
+   *
+   * @param string $apiKey Nueva llave a almacenar
+   */
+  public function setApiKey($value){
+    $this->apiKey = $value;
+    return $this->setConfigValue("apiKey",$value);
+  }
+
+  /**
+   * setUID
+   * Fuerza el valor del User Identificator
+   *
+   * @param string $UID identificador único de usuario
+   * @return string identificador único de usuario
+   */
+
+  public function setUID($UID){
+    $this->UID = $UID;
+    $this->setCookie("smartListUID", $this->UID);
+    $this->sendCreateUser();
+    return $this->UID;
+  }
+
+  /**
+   * getUID
+   * Devuelve el User Identificator
+   * @return string identificador único de usuario
+   */
+  public function getUID(){
+    return $this->UID;
+  }
+
+
+
+
+  public function sendQuery($itemList){}
+
+  /**
+   * setAI
+   * description
+   *
+   * @param [type] $ai [description]
+   */
+
+  public function setAI($ai){}
+
+  /**
+   * getAI
+   * description
+   *
+   * @return [type] [description]
+   */
+
+  public function getAI(){}
+
+
+  /**
+   * syncAI
+   * description
+   *
+   * @return [type] [description]
+   */
+  public function syncAI(){}
+
+  public function sendLog($str){}
+
+  public function getEventsLimit(){}
+
+  public function setEventsLimit($value){}
+
+  public function getGaID(){}
+
+  public function setGaID($value){}
+
+  public function getGaSlot(){}
+
+  public function setGaSlot($value){}
+
+  public function getGaName(){}
+
+  public function setGaName($value){}
+
+  public function getSyncPeriod(){}
+
+  public function setSyncPeriod($value){}
+
+}
+      </pre>
+
+    </div>
+  </div>
+</template>
