@@ -1,11 +1,16 @@
-Template.dashboard.onCreated(function() {
+Template.adminUserDashboard.onCreated(function() {
   Session.set('period', "today");
+
 });
 
-Template.dashboard.helpers({
+Template.adminUserDashboard.helpers({
+  hasMemberUsers : function(){
+    return (MemberUsersResume.find().count() > 0)
+  },
   countMemberUsers: function(){
     var dayPeriod = getMomentPeriod(Session.get('period'));
     var memberUsersResumes = MemberUsersResume.find({
+      apiKey: this.member.idUser,
       createdAt : {
         $gte : dayPeriod.start,
         $lt : dayPeriod.end
@@ -24,6 +29,7 @@ Template.dashboard.helpers({
   countMemberEvents: function(event,abTest){
     var dayPeriod = getMomentPeriod(Session.get('period'));
     var MemberEventsResumes = MemberEventsResume.find({
+      apiKey: this.member.idUser,
       event : event,
       abTest : abTest,
       createdAt : {
@@ -35,15 +41,18 @@ Template.dashboard.helpers({
     MemberEventsResumes.forEach(function(MemberEventsResume) {
       totalCount += MemberEventsResume.count;
     });
+
     if(totalCount == 0){
       totalCount = "--";
     }
+
     return totalCount;
 
   },
   averageMemberEvents: function(event,abTest){
     var dayPeriod = getMomentPeriod(Session.get('period'));
     var MemberEventsResumes = MemberEventsResume.find({
+      apiKey: this.member.idUser,
       event : event,
       abTest : abTest,
       createdAt : {
@@ -59,6 +68,7 @@ Template.dashboard.helpers({
 
 
     var memberUsersResumes = MemberUsersResume.find({
+      apiKey: this.member.idUser,
       createdAt : {
         $gte : dayPeriod.start,
         $lt : dayPeriod.end
@@ -75,7 +85,6 @@ Template.dashboard.helpers({
     }else{
       users = totalCountUsers * 0.1
     }
-
     if(totalCountUsers == 0){
       averageMemberEvents = "--";
     }else{
@@ -90,6 +99,7 @@ Template.dashboard.helpers({
     var dayPeriod = getMomentPeriod(Session.get('period'));
 
     var memberUsersResumes = MemberUsersResume.find({
+      apiKey: this.member.idUser,
       createdAt : {
         $gte : dayPeriod.start,
         $lt : dayPeriod.end
@@ -105,6 +115,7 @@ Template.dashboard.helpers({
 
 
     var MemberEventsResumes = MemberEventsResume.find({
+      apiKey: this.member.idUser,
       event : event,
       abTest : "y",
       createdAt : {
@@ -123,6 +134,7 @@ Template.dashboard.helpers({
 
 
     var MemberEventsResumes = MemberEventsResume.find({
+      apiKey: this.member.idUser,
       event : event,
       abTest : "n",
       createdAt : {
@@ -135,7 +147,6 @@ Template.dashboard.helpers({
     MemberEventsResumes.forEach(function(MemberEventsResume) {
       totalCountEvents += MemberEventsResume.count;
     });
-
 
     users = totalCountUsers * 0.1
     averageMemberEvents_no = parseFloat(totalCountEvents / users).toFixed(2);
@@ -241,7 +252,7 @@ Template.dashboard.helpers({
 
 });
 
-Template.dashboard.events({
+Template.adminUserDashboard.events({
   'click .change_period': function(e) {
     $(".change_period").removeClass("btn-primary");
     $(e.target).addClass("btn-primary");

@@ -5,6 +5,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
+        <th>apiKey</th>
         <th>Nombre</th>
         <th>Username</th>
         <th>Correo</th>
@@ -28,6 +29,7 @@
 <template name="adminUsersTableItem">
   {{#if isNotAdmin member.type}}
     <tr>
+      <td>{{member.idUser}}</td>
       <td class="w-100-p">{{member.fullName}}</td>
       <td>{{username}}</td>
       <td>{{member.email}}</td>
@@ -38,6 +40,8 @@
       <td><span class="text-nowrap">{{created}}</span></td>
       <td>
         <span class="text-nowrap">
+          <a href="/admin/user/{{_id}}/dashboard">Dashboard</a>
+          &nbsp;|&nbsp;
           <a href="/admin/user/{{_id}}/edit">Editar</a>
           &nbsp;|&nbsp;
           <a class="red delete" href="#">Eliminar</a>

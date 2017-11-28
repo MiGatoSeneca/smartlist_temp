@@ -1,4 +1,4 @@
-<template name="dashboard">
+<template name="adminDashboard">
   <h4 class="breadcrumbs"><a href="/dashboard">Dashboard</a></h4>
   <div class="row">
     <div class="col-md-6">
@@ -17,26 +17,40 @@
 
   <hr class=""/>
 
-  <h4 class="m-t-20 ">Uso Global de Smartlist</h4>
-  <hr class="m-t-0"/>
   <div class="row m-t-30">
-    <div class="col-md-3 text-center">
-      <h1 class="m-0">{{countMemberUsers}}</h1>
-      <p class="m-0 text-muted">Usuarios</p>
+    <div class="col-md-3">
+      <h4 class="m-t-20 ">Clientes Smartlist (totales)</h4>
+      <hr class="m-t-0"/>
+      <div class="text-center">
+        <h1 class="m-0">{{countUsers}}</h1>
+        <p class="m-0 text-muted">Clientes</p>
+      </div>
     </div>
-    <div class="col-md-3 text-center">
-      <h1 class="m-0">{{countMemberEvents "list" "total"}}</h1>
-      <p class="m-0 text-muted">Mirar Categoría</p>
+    <div class="col-md-9">
+      <h4 class="m-t-20 ">Uso Global de Smartlist</h4>
+      <hr class="m-t-0"/>
+      <div class="row m-t-30">
+        <div class="col-md-3 text-center">
+          <h1 class="m-0">{{countMemberUsers}}</h1>
+          <p class="m-0 text-muted">Usuarios</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <h1 class="m-0">{{countMemberEvents "list" "total"}}</h1>
+          <p class="m-0 text-muted">Mirar Categoría</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <h1 class="m-0">{{countMemberEvents "view" "total"}}</h1>
+          <p class="m-0 text-muted">Items Vistos</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <h1 class="m-0">{{countMemberEvents "add" "total"}}</h1>
+          <p class="m-0 text-muted">Items Añadidos</p>
+        </div>
+      </div>
     </div>
-    <div class="col-md-3 text-center">
-      <h1 class="m-0">{{countMemberEvents "view" "total"}}</h1>
-      <p class="m-0 text-muted">Items Vistos</p>
-    </div>
-    <div class="col-md-3 text-center">
-      <h1 class="m-0">{{countMemberEvents "add" "total"}}</h1>
-      <p class="m-0 text-muted">Items Añadidos</p>
-    </div>
+
   </div>
+
   <h4 class="m-t-40 ">Resumen de Mejoras</h4>
   <hr class="m-t-0"/>
   <div class="row">
@@ -71,25 +85,5 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-6">
-      <h4 class="m-t-40">Gráfica Comparativa</h4>
-      <hr class="m-t-0"/>
-      <div class="text-center p-b-100">
-        <h1 class="glyphicon glyphicon-info-sign text-muted"></h1>
-        <h4 class="text-muted">La Gráfica Comparativa<br/>no está disponible</h4>
-        <p class="small text-muted">Las gráficas comparativas necesitan más datos para poder mostrarse.</p>
-      </div>
 
-    </div>
-    <div class="col-md-6">
-      <h4 class="m-t-40">Representación AI</h4>
-      <hr class="m-t-0"/>
-      <div class="text-center p-b-100">
-        <h1 class="glyphicon glyphicon-info-sign text-muted"></h1>
-        <h4 class="text-muted">La representación de la AI<br/>aún no está disponible</h4>
-        <p class="small text-muted">Aún no se tienen suficientes datos para respresentar grádicamente su AI</p>
-      </div>
-    </div>
-  </div>
 </template>

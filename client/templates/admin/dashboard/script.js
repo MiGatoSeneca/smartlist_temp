@@ -1,8 +1,12 @@
-Template.dashboard.onCreated(function() {
+Template.adminDashboard.onCreated(function() {
   Session.set('period', "today");
+
 });
 
-Template.dashboard.helpers({
+Template.adminDashboard.helpers({
+  countUsers: function() {
+    return Members.find({type:"member"}).count();
+  },
   countMemberUsers: function(){
     var dayPeriod = getMomentPeriod(Session.get('period'));
     var memberUsersResumes = MemberUsersResume.find({
@@ -35,9 +39,11 @@ Template.dashboard.helpers({
     MemberEventsResumes.forEach(function(MemberEventsResume) {
       totalCount += MemberEventsResume.count;
     });
+
     if(totalCount == 0){
       totalCount = "--";
     }
+
     return totalCount;
 
   },
@@ -75,7 +81,6 @@ Template.dashboard.helpers({
     }else{
       users = totalCountUsers * 0.1
     }
-
     if(totalCountUsers == 0){
       averageMemberEvents = "--";
     }else{
@@ -135,7 +140,6 @@ Template.dashboard.helpers({
     MemberEventsResumes.forEach(function(MemberEventsResume) {
       totalCountEvents += MemberEventsResume.count;
     });
-
 
     users = totalCountUsers * 0.1
     averageMemberEvents_no = parseFloat(totalCountEvents / users).toFixed(2);
@@ -241,7 +245,7 @@ Template.dashboard.helpers({
 
 });
 
-Template.dashboard.events({
+Template.adminDashboard.events({
   'click .change_period': function(e) {
     $(".change_period").removeClass("btn-primary");
     $(e.target).addClass("btn-primary");

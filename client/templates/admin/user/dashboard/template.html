@@ -1,0 +1,109 @@
+<template name="adminUserDashboard">
+  <h4 class="breadcrumbs"><a href="/dashboard">Dashboard</a></h4>
+  {{#unless hasMemberUsers}}
+    <div class="text-center m-t-50">
+      <h1 class="glyphicon glyphicon-remove"></h1>
+      <h4>Atención es necesario instalar el módulo para ver el dashboard</h4>
+      <p>En el dashboard aparecerán las métricas principales de tu IA</p>
+      <a href="/install" class="btn btn-primary">Ir a la instalación</a>
+    </div>
+  {{else}}
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="m-t-0 m-b-0">Dashboard</h2>
+      </div>
+      <div class="col-md-6 text-right">
+        <span class="m-r-10">Fecha:</span>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <a href="#" class="btn btn-default change_period btn-primary" data-value="today">Hoy</a>
+          <a href="#" class="btn btn-default change_period" data-value="yesterday">Ayer</a>
+          <a href="#" class="btn btn-default change_period" data-value="last_7_days">Últimos 7 Días</a>
+          <a href="#" class="btn btn-default change_period" data-value="last_30_days">Últimos 30 Días</a>
+        </div>
+      </div>
+    </div>
+
+    <hr class=""/>
+
+    <h4 class="m-t-20 ">Uso Global de Smartlist</h4>
+    <hr class="m-t-0"/>
+    <div class="row m-t-30">
+      <div class="col-md-3 text-center">
+        <h1 class="m-0">{{countMemberUsers}}</h1>
+        <p class="m-0 text-muted">Usuarios</p>
+      </div>
+      <div class="col-md-3 text-center">
+        <h1 class="m-0">{{countMemberEvents "list" "total"}}</h1>
+        <p class="m-0 text-muted">Mirar Categoría</p>
+      </div>
+      <div class="col-md-3 text-center">
+        <h1 class="m-0">{{countMemberEvents "view" "total"}}</h1>
+        <p class="m-0 text-muted">Items Vistos</p>
+      </div>
+      <div class="col-md-3 text-center">
+        <h1 class="m-0">{{countMemberEvents "add" "total"}}</h1>
+        <p class="m-0 text-muted">Items Añadidos</p>
+      </div>
+    </div>
+    <h4 class="m-t-40 ">Resumen de Mejoras</h4>
+    <hr class="m-t-0"/>
+    <div class="row">
+      <div class="col-md-4 text-center">
+        <div class="p-10">
+          <h4>Visitas a Categoría</h4>
+          <h1>{{{averageDifferenceMemberEvents "list"}}}</h1>
+          <p class="small text-muted">
+            Media de Visitas a categorías<br/>
+            Con Person.: {{averageMemberEvents "list" "y"}} , Sin Person.: {{averageMemberEvents "list" "n"}}
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="p-10">
+          <h4>Items Vistos</h4>
+          <h1>{{{averageDifferenceMemberEvents "view"}}}</h1>
+          <p class="small text-muted">
+            Media de Visitas a categorías<br/>
+            Con Person.: {{averageMemberEvents "view" "y"}} , Sin Person.: {{averageMemberEvents "view" "n"}}
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="p-10">
+          <h4>Items Añadidos</h4>
+          <h1>{{{averageDifferenceMemberEvents "add"}}}</h1>
+          <p class="small text-muted">
+            Media de Visitas a categorías<br/>
+            Con Person.: {{averageMemberEvents "add" "y"}} , Sin Person.: {{averageMemberEvents "add" "n"}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="m-t-40">Gráfica Comparativa</h4>
+        <hr class="m-t-0"/>
+        <div class="text-center p-b-100">
+          <h1 class="glyphicon glyphicon-info-sign text-muted"></h1>
+          <h4 class="text-muted">La Gráfica Comparativa<br/>no está disponible</h4>
+          <p class="small text-muted">Las gráficas comparativas necesitan más datos para poder mostrarse.</p>
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <h4 class="m-t-40">Representación AI</h4>
+        <hr class="m-t-0"/>
+        <div class="text-center p-b-100">
+          <h1 class="glyphicon glyphicon-info-sign text-muted"></h1>
+          <h4 class="text-muted">La representación de la AI<br/>aún no está disponible</h4>
+          <p class="small text-muted">Aún no se tienen suficientes datos para respresentar grádicamente su AI</p>
+        </div>
+      </div>
+    </div>
+    <hr class="m-t-0"/>
+
+
+
+  {{/unless}}
+
+</template>

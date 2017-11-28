@@ -12,9 +12,9 @@
     <div class="col-md-10">
       <h1>Documentación Smartlist</h1>
       <hr/>
-      <p class="text-danger"><b>Atención</b> esta documentación está pensada para la integración de Smartlist en proyectos propios o en CMS que necesiten una instalación especial.</p>
+      <p class="text-danger"><b>Atención</b> esta documentación está pensada para la integración de Smartlist en proyectos propios o en CMS que necesiten una instalación para proyectos de desarrollo propio.</p>
       <p>En el caso de tener un CMS como <b>Prestashop</b>, <b>Magento</b>, <b>Shopify</b> o <b>Woocommerce</b>, puede encontrar la guía de instalación y uso dentro del dashboard.</p>
-      <h3>Introducción</h3>
+      <h2>Descripción del Módulo</h2>
       <hr/>
       <p>Smartlist es una AI-as-a-Service.</p>
       <p>Con Smartlist, podrás dejar la gestión de los listados de productos a nuestra AI, que buscará el orden de productos basado en el patrón de comportamiento del usuario que maximize la visibilidad de los todos los productos</p>
@@ -26,23 +26,41 @@
       <p><b>Árbol de ficheros</b></p>
       <ul>
         <li>
-          <i class="fa fa-folder-open"></i> config
+          <i class="fa fa-folder-open"></i> <b>config</b>
           <ul>
+            <li>ab.json</li>
             <li>app.json</li>
             <li>config.json</li>
+            <li>
+              <i class="fa fa-folder-open"></i> <b>ai</b>
+              <ul>
+                <li>descend.json</li>
+                <li>promote.json</li>
+                <li>skip.json</li>
+              </ul>
+            </li>
           </ul>
         </li>
         <li>
-          tools
+          <i class="fa fa-folder-open"></i> <b>examples</b>
+          <ul>
+            <li>add_product.php</li>
+            <li>sort_products.php</li>
+            <li>view_product.php</li>
+          </ul>
+        </li>
+        <li>
+          <i class="fa fa-folder-open"></i> <b>tools</b>
           <ul>
             <li>cron.php</li>
           </ul>
         </li>
         <li>
-          var
+          <i class="fa fa-folder-open"></i> <b>var</b>
           <ul>
             <li>ab.json</li>
             <li>ai.json</li>
+            <li>graphai.json</li>
           </ul>
         </li>
         <li>smartlist.php</li>
@@ -55,23 +73,108 @@
         <li><b>Permisos de escritura</b> en la carpeta donde se aloja el plugin</li>
       </ul>
       <p>En caso de tener problemas de instalación compruebe que estas tres características claves están disponibles.</p>
-      <p><b>SmartList y la base de datos</b></p>
       <p>Smartlist <b>no</b> alamacena nada en su base de datos, por tanto no es necesario configurar ningún acceso, todos los datos utilizados son almacenados dentro de la var dentro del módulo.</p>
-      <h3>Inicialización de Clase</h3>
+      <h2>Instalación Módulo</h2>
       <hr/>
-      <p>Una vez instalado en módulo en la carpeta correspondiente para inicialo simplemente tendrá que generar una instancia de la clase Smartlist</p>
+      <p>Para instalar el módulo SmartList es necesario que se descargue el fichero .zip con el contenido del módulo <a href="/plugins/1.2.2_smartlist.zip">aquí</a>.</p>
+      <p>Una vez lo haya descargado decomprímalo y extráigalo en la carpeta de plugins de su proyecto, en la documentación llamaremos a esta tura <code>PATH_TO_SMARTLIST</code>.</p>
+      <p>El módilo estará compuesto del código fuente de la clase smartliss, los ficheros de configuración, la carpeta de variables del módulo y una carpeta de herramientas y otra de ejemplo.</p>
+      <p><b class="text-danger">Importante</b></p>
+      <p class="text-danger">Es necesario que la carpeta PATH_TO_SMARTLIST/var tenga permisos de escritura del usuario que ejecuta el código php dentro de su proyecto. Desde un servidor linux podrá cambiar los persmisos ejecutando chmod</p>
+      <pre>$ chmod 666 -R ./var</pre>
+      <p>Una vez haya comprobado que tiene persmisos de lectura y escritura es necesario que configure el módulo a través de sus archivos de configuración.</p>
+      <h2>Configuración</h2>
+      <hr/>
+      <p>Smartlist se configura a través de los archivos de configuración que encontrará en la carpeta <code>PATH_TO_SMARTLIST/config</code>, a continuzación encontrará una guía detallada de todos ellos para que pueda crear su propia configuación.</p>
+      <p><b>Archivos de configuración</b></p>
+      <ul>
+        <li>
+          <i class="fa fa-folder-open"></i> <b>config</b>
+          <ul>
+            <li>ab.json</li>
+            <li>app.json</li>
+            <li>config.json</li>
+            <li>
+              <i class="fa fa-folder-open"></i> <b>ai</b>
+              <ul>
+                <li>descend.json</li>
+                <li>promote.json</li>
+                <li>skip.json</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <h3>config.json - Configuración del Módulo</h3>
+      <p>Este archivo almacena toda la configuración necesaria para la ejecución de su módulo, una vez lo haya intalado, es necesario que modifique los valores de este archivo para introducir su apiKey y los demás valores configurables del módulo</p>
+<pre>{
+  <b>apiKey</b>: "your_apikey", <span class="text-muted">//apiKey de tu módulo</span>
+  <b>gaActive</b>: false, <span class="text-muted">//Activación del seguimiento de analytics</span>
+  <b>eventsLimit</b>: "5", <span class="text-muted">//Historico de eventos a tener en consideración</span>
+  <b>autoSaveGraph</b>: true, <span class="text-muted">//Auto adaptación de resultados en graphai</span>
+  <b>sortType</b>: "graphAI", <span class="text-muted">//tipo de AI utilizada: ai, graphai</span>
+  <b>debug</b>: "none" <span class="text-muted">//modo depuración del módulo: none, server, local</span>
+}</pre>
+      <p>A continuación se encuentra la descripción del resto de archivos de configuración del módulo.</p>
+      <h4>ab.json - Configuración del A/B Testing</h4>
+      <p>Para realizar un cálculo efectivo sobre si la personalización está mejorando o no los resultados, es necesario lanzar un abtesting continuo, donde se mantiene un grupo de población como "población de control", gracias al archivo de configuración ab.json smartlist obtiene el patron del test a/b que tiene que realizar.</p>
+      <p>A continuación puedes ver el contenido del archivo ab.json para un test 90/10</p>
+<pre>{
+  <b>values</b>: ["y","y","y","y","y","y","y","y","y","n"]
+}</pre>
+      <p>Dentro de la variable values se encuentra un array de elementos con valores <b>y</b> o <b>n</b>, para cada nuevo usuario se le ofrecerá un nuevo valor dentro de esta cadena intercalando así los valores del test.</p>
+      <h4>ai/descend.json & ai/promote.json - Configuración de la AI</h4>
+      <p>En caso de querer una configuración especial de la AI que potencie más un tipo de productos determinados o que haga decender a otros puede utilizar los archivos descend.json y promote.json que encontrará dentro de la carpeta <code>PATH_TO_SMARTLIST/config/ai</code>. En estos archivos que especifican las propiedades o los IIDs de los items que se quieren promocionar o hacer descender.</p>
+      <p><b>ai/promote.json</b></p>
+      <p>Promote especifica las características que tiene que tener un item para ser promocionado, en el caso de cumplir alguna de ellas en el momento de su evaluación su puntuación aumentará un valor inalcanzable para el resto de items a ordenar.</p>
+<pre>{
+  <b>IID</b>: [],
+  <b>properties</b>:[]
+}</pre>
+      <p>A continuación puedes ver un ejemplo donde se especifica una configuración de dos productos concretos con sus IIDs y de los productos que tengan la propiedad new verdadero o stars con valores 4.5 y 5.</p>
+<pre>{
+  <b>IID</b>: ["8366-AIUY","8822-UODE"],
+  <b>properties</b>:[
+    <b>new</b>: true,
+    <b>stars</b>: [4.5,5]
+  ]
+}</pre>
+      <p><b>ai/descend.json</b></p>
+      <p>Como opuesto a promote existe el fichero descend que arrastrará hasta las últimas posiciones a aquellos items que cumplan alguna de las características que especifica su archivo de configuración.</p>
+<pre>{
+  <b>IID</b>: [],
+  <b>properties</b>:[]
+}</pre>
+            <p>A continuación puedes ver un ejemplo donde se especifica una configuración de los productos que tengan la propiedad second_hand verdadero o stars con valores 0.5 y 0.</p>
+<pre>{
+  <b>IID</b>: [],
+  <b>properties</b>:[
+    <b>second_hand</b>: true,
+    <b>stars</b>: [0,0.5]
+  ]
+}</pre>
+      <h4>app.json - Configuración interna</h4>
+      <p>Este archivo de configuración almacena los datos internos del módulo como su versión y la url del servidor de entrenamientos, es aconsejable no modificar ninguno de estos campos</p>
+<pre>{
+  <b>version</b>: "1.2.2",
+  <b>url</b>: "http://smartlist.conver.fit/api/"
+}</pre>
+
+
+      <h2>Smartlist en Funcionamiento</h2>
+      <hr/>
       <pre>require_once(<i>PATH_TO_SMARTLIST</i>+"/smartlist.php");
 $smartlist = new SmartList();</pre>
       <p><b>¿Registro de usuarios?</b></p>
       <p>Una vez creada la instancia el módulo automáticamente detectará si el usuario que está ejecutando el módulo es nuevo o no.</p>
-      <h3>Eventos</h3>
+      <h3>Registro de Eventos</h3>
       <hr/>
       <p>La ordenación de los productos depende de la actividad que realiza el usuario dentro de nuestra web, para ello es necesario regitrar</p>
       <pre>
 $smartlist->createEvent("view",$item);</pre>
       <p>El primer campo permite especificar la acción y el segundo introducir el item, a continucación puedes ver una descipición de este elemento</p>
       <p><b>Formato del objeto item:</b></p>
-      <pre>
+<pre>
 <b>item</b> : {
   <b>IID</b> : <i>identificador único de item</i>,
   <b>properties</b> : <i>array con todas las propiedades del item: (color, talla, modelo, tela...)</i>,
@@ -90,194 +193,37 @@ $smartlist->createEvent("view",$item);</pre>
         <b>size</b> : 10
       }
 }</pre>
-      <h3>Ordenar</h3>
+      <h3>Ordenar listado de Items</h3>
+      <hr/>
       <p>La función ordenar, cambia el orden de los productos datos utilizando la AI entrenada almacenada en el sistema, potenciando los productos que es más probable que el usuario vea</p>
-
       <pre>
-$smartlist->sort($itemsList);</pre>
+$itemsList = $smartlist->sort($itemsList);</pre>
       <p>La función ordenar, cambia el orden de los productos datos utilizando la AI entrenada almacenada en el sistema, potenciando los productos que es más probable que el usuario vea</p>
-
+      <h3>Sincronización de la AI</h3>
+      <hr/>
+      <p>Smartlist sigue la filosofía: La AI vive en el lado del cliente y los entrenamientos los hacemos en la nube. Esto permite que la ejecución de la AI sea más rápida en el lado del cliente sin perder la posibilidad de recibir un entramiento constante.</p>
+      <p>Para recibir los entrenamientos es necesario sincronizar ambas AIs con una periocidad regular, aunque depende del volumen de usuarios y productos, es aconsejable sincronizar la AI diariamente en el momento que su web tenga menor número de usuarios</p>
+      <p>La sincronización se realiza a través de una llamada a una tarea cron que ejecutará una pequeño código se sincorización que puede encontrar en <code>PATH_TO_SMARTLIST/tools/cron.php</code>.</p>
+<pre>
+&lt;?php
+  require "../smartlist.php";
+  $smartlist = new SmartList();
+  $smartlist->syncAI();
+?&gt;
+</pre>
+      <p>El código cron que actualiza 1 vez al día a las 2:00AM su AI quedaría de la siguiente forma:</p>
+<pre>
+  0 2 * * * REAL_PATH_TO_SMARTLIST/tools/cron.php
+</pre>
+      <p>Note que este caso se ha utlizado <code>REAL_PATH_TO_SMARTLIST</code> como forma de especificar que es la ruta real dentro del servidor a la carpeta donde se aloja el código de smartlist</p>
+      <h3>Información de la documentación</h3>
+      <p>Esta documentación es relativa a la versión 1.2.2 de Smartlist, en caso de cualquier duda escríbenos a info@converfit.com</p>
       <p>&nbsp;</p>
-      <p>&nbsp;</p>
-      <p>&nbsp;</p>
-      <p>&nbsp;</p>
-      <p>&nbsp;</p>
-      <h3>Estructura de la Clase</h3>
-      <pre>
-
-
-class SmartList {
-
-  /**
-   * __construct
-   * Constructor
-   * @param       {string} $cms Especificar el CMS utilizado
-   * @constructor
-   * @return      {bool}
-   */
-
-  public function __construct($cms){
-
-  }
-
-
-  /**
-   * createEvent
-   * Envía información al servidor de predicción para entrenamiento.
-   *
-   * @param  string  $action   Acción realizada
-   * @param  array   $item     Datos del producto
-   * @return boolean           Resultado del envío del la información
-   */
-
-  public function createEvent($action,$item){}
-
-  public function sort($itemsList){}
-
-  /**
-   * getUrl
-   * Duelve la url utilizada para conectarse con el servidor de predicción
-   *
-   * @return string url del servidor de predicción
-   */
-
-  public function getDebug(){}
-
-  /**
-   * setUrl
-   * Actualiza la url utilizada para conectarse con el servidor de predicción
-   *
-   * @return string url del servidor de predicción
-   */
-  public function setDebug($value){}
-
-
-
-  /**
-   * getUrl
-   * Duelve la url utilizada para conectarse con el servidor de predicción
-   *
-   * @return string url del servidor de predicción
-   */
-  public function getUrl(){}
-
-  /**
-   * setUrl
-   * Actualiza la url utilizada para conectarse con el servidor de predicción
-   *
-   * @return string url del servidor de predicción
-   */
-  public function setUrl($value){}
-
-  /**
-   * getUrl
-   * Duelve la url utilizada para conectarse con el servidor de predicción
-   *
-   * @return string url del servidor de predicción
-   */
-  public function getVersion(){}
-
-  /**
-   * getApiKey
-   * Devuelve el apiKey utilizado actualmente
-   *
-   * @return string llave de acceso al API del servidor
-   */
-  public function getApiKey(){}
-
-  /**
-   * setApiKey
-   * Actualiza el apiKey utilizado
-   * config/config.json
-   *
-   * @param string $apiKey Nueva llave a almacenar
-   */
-  public function setApiKey($value){
-    $this->apiKey = $value;
-    return $this->setConfigValue("apiKey",$value);
-  }
-
-  /**
-   * setUID
-   * Fuerza el valor del User Identificator
-   *
-   * @param string $UID identificador único de usuario
-   * @return string identificador único de usuario
-   */
-
-  public function setUID($UID){
-    $this->UID = $UID;
-    $this->setCookie("smartListUID", $this->UID);
-    $this->sendCreateUser();
-    return $this->UID;
-  }
-
-  /**
-   * getUID
-   * Devuelve el User Identificator
-   * @return string identificador único de usuario
-   */
-  public function getUID(){
-    return $this->UID;
-  }
-
-
-
-
-  public function sendQuery($itemList){}
-
-  /**
-   * setAI
-   * description
-   *
-   * @param [type] $ai [description]
-   */
-
-  public function setAI($ai){}
-
-  /**
-   * getAI
-   * description
-   *
-   * @return [type] [description]
-   */
-
-  public function getAI(){}
-
-
-  /**
-   * syncAI
-   * description
-   *
-   * @return [type] [description]
-   */
-  public function syncAI(){}
-
-  public function sendLog($str){}
-
-  public function getEventsLimit(){}
-
-  public function setEventsLimit($value){}
-
-  public function getGaID(){}
-
-  public function setGaID($value){}
-
-  public function getGaSlot(){}
-
-  public function setGaSlot($value){}
-
-  public function getGaName(){}
-
-  public function setGaName($value){}
-
-  public function getSyncPeriod(){}
-
-  public function setSyncPeriod($value){}
-
-}
-      </pre>
-
     </div>
   </div>
+  <footer>
+    <hr/>
+    <p class="text-center">Converfit Team © 2017</p>
+  </footer>
+
 </template>
